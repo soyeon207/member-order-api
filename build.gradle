@@ -22,16 +22,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	// swagger
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 
-	// flyway
-	implementation 'org.flywaydb:flyway-core:7.15.0'
+	implementation "io.jsonwebtoken:jjwt:0.9.1" // JWT
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9' // swagger
+	implementation 'org.flywaydb:flyway-core:7.15.0' // flyway
 
 	// mapstruct
 	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 
 	// queryDSL 설정
