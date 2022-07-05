@@ -86,7 +86,7 @@ public class MembersServiceImpl implements MembersService {
                 .collect(Collectors.toList());
 
         Page<MembersDto> membersDtoPage = new PageImpl<>(membersDtoList, pageable, membersDtoList.size());
-        return ResponseDto.success(membersDtoPage, "회원정보 가져오기 성공");
+        return ResponseDto.success(membersDtoPage.getContent(), "회원정보 가져오기 성공");
     }
 
 }
