@@ -9,6 +9,8 @@ create table members
     password          varchar(100) not null comment '비밀번호',
     email             varchar(100) not null comment '이메일',
     gender            varchar(10)  null comment '성별',
+    user_role         varchar(10)  null comment '권한',
+    last_ordered_at   datetime     null comment '마지막 주문 시간',
     created_date_time datetime     not null comment '생성시간',
     updated_date_time datetime     not null comment '수정시간',
     constraint members_pk

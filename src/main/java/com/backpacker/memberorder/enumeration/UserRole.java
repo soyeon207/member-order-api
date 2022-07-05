@@ -1,5 +1,13 @@
 package com.backpacker.memberorder.enumeration;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum UserRole {
-    USER, ADMIN
+    USER("ROLE_USER"),
+    ADMIN("ROLE_ADMIN");
+
+    private String value;
 }

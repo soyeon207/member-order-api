@@ -17,13 +17,13 @@ public class Orders extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "order_number")
     private String orderNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "product_name")
     private String productName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "payment_date_time")
     private LocalDateTime paymentDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
