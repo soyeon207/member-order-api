@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtConfig {
 
+    private static final String ROLES_KEY = "roles";
+
     @Value("${JWT_TOKEN}")
     private String secretKey;
 
@@ -72,10 +74,14 @@ public class JwtConfig {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get("auth").toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+        Collection<? extends GrantedAuthority> authorities = Optional
+                .ofNullable(claims.get(ROLES_KEY))
+                .stream()
+                .map(Object::toString)
+                .map(b->b.replace("[", ""))
+                .map(c->c.replace("]", ""))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
@@ -89,7 +95,11 @@ public class JwtConfig {
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            Jws<Claims> claims = Jwts
+                    .parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(jwtToken);
+
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
             return false;

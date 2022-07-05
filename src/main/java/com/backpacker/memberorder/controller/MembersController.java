@@ -28,27 +28,27 @@ public class MembersController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "로그인 API", description = "hello 샘플 예제입니다. ")
+    @Operation(summary = "로그인 API")
     public ResponseEntity<?> login(@Valid @RequestBody MemberLoginRequest memberLoginRequest) {
         return membersService.loginMember(memberLoginRequest);
     }
 
     @GetMapping("/{memberId}")
-    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ADMIN')")
     @Operation(summary = "단일 회원 상세 정보 조회 API")
     public ResponseEntity<?> getMember(@PathVariable("memberId") Long memberId) {
         return membersService.getMember(memberId);
     }
 
     @GetMapping("/{memberId}/orders")
-    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ADMIN')")
     @Operation(summary = "단일 회원 주문 목록 조회 API")
     public ResponseEntity<?> getOrdersByMember(@PathVariable("memberId") Long memberId) {
         return membersService.getOrdersByMember(memberId);
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated() and hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ADMIN')")
     @Operation(summary = "여러 회원 목록 조회 API")
     public ResponseEntity<?> getMembers(@RequestBody MemberRequest memberRequest, @PageableDefault Pageable pageable) {
         return membersService.getMembers(memberRequest, pageable);
