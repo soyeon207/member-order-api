@@ -28,6 +28,8 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 스프링 시큐리티가 세션 쿠키 방식으로 동작하지 않도록 설정
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class); // JWT 커스텀 필터가 UsernamePasswordAuthenticationFilter 전체 실행되도록 추가
+
+        return http.build();
     }
 
     @Bean

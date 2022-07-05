@@ -5,15 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrdersDto {
-    protected Long id;
-    protected String orderNumber;
-    protected String productName;
-    protected LocalDateTime paymentDateTime;
+public class MemberWithOrdersDto extends MembersDto {
+
+    protected Set<OrdersDto> ordersDtoSet;
+
 }
