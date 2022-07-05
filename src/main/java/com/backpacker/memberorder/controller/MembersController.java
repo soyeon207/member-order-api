@@ -2,12 +2,10 @@ package com.backpacker.memberorder.controller;
 
 import com.backpacker.memberorder.dto.MemberCreateRequest;
 import com.backpacker.memberorder.dto.MemberLoginRequest;
-import com.backpacker.memberorder.dto.MemberRequest;
 import com.backpacker.memberorder.service.MembersService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +48,11 @@ public class MembersController {
     @GetMapping
     @PreAuthorize("isAuthenticated() and hasAuthority('ADMIN')")
     @Operation(summary = "여러 회원 목록 조회 API")
-    public ResponseEntity<?> getMembers(@RequestBody MemberRequest memberRequest, @PageableDefault Pageable pageable) {
-        return membersService.getMembers(memberRequest, pageable);
+    public ResponseEntity<?> getMembers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            Pageable pageable) {
+        return membersService.getMembers(name, email, pageable);
     }
 
 }

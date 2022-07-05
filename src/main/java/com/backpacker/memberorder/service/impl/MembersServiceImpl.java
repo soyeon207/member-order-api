@@ -78,9 +78,8 @@ public class MembersServiceImpl implements MembersService {
     }
 
     @Override
-    public ResponseEntity<?> getMembers(MemberRequest memberRequest, Pageable pageable) {
-        List<Members> membersList = memberRepository.findAllMembersWithPaging(pageable, memberRequest.getEmail(), memberRequest
-                .getName());
+    public ResponseEntity<?> getMembers(String name, String email, Pageable pageable) {
+        List<Members> membersList = memberRepository.findAllMembersWithPaging(pageable, email, name);
         List<MembersDto> membersDtoList = membersList
                 .stream()
                 .map(memberMapper::toDto)
