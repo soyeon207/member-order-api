@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class JwtConfig {
 
     private static final String ROLES_KEY = "roles";
+    private static final String JWT_HEADER_KEY = "Authorization";
 
     @Value("${JWT_TOKEN}")
     private String secretKey;
@@ -43,15 +44,14 @@ public class JwtConfig {
     public JwtTokenInfo createToken(String userEmail, List<String> roleList) {
         // JWT payload 에 저장되는 정보단위
         Claims claims = Jwts.claims().setSubject(userEmail);
-        claims.put("roles", roleList);
+        claims.put(ROLES_KEY, roleList);
 
         Date now = new Date();
         String accessToken = Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + expireTime)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
-                // signature 에 들어갈 secret값 세팅
+                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과 signature 에 들어갈 secret값 세팅
                 .compact();
 
         String refreshToken = Jwts.builder()
@@ -87,9 +87,12 @@ public class JwtConfig {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    // Request의 Header에서 token 값을 가져옴 "X-AUTH-TOKEN" : "TOKEN값'
+    // Request의 Header에서 token 값을 가져옴 "Authorization" : "Bearer TOKEN값'
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        return Optional
+                .ofNullable(request.getHeader(JWT_HEADER_KEY))
+                .map(token->token.substring("Bearer ".length()))
+                .orElse(null);
     }
 
     // 토큰의 유효성 + 만료일자 확인

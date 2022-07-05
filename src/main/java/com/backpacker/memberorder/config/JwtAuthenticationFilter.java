@@ -20,7 +20,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // Request header 에서 X-AUTH-TOKEN 값을 가져옴.
+        // Request header 에서 Authorization 값을 가져옴.
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
         if (Optional.ofNullable(token).map(jwtTokenProvider::validateToken).orElse(false)) {
