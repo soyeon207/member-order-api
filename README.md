@@ -1,4 +1,4 @@
-# 🙍‍♀🧾 member-order-api
+# 🙍‍♀🧾 member-order-api  <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/soyeon207/member-order-api&count_bg=%23000000&title_bg=%23000000&icon=github.svg&icon_color=%23E7E7E7&title=GitHub&edge_flat=false"/>
 회원 인증 및 주문 서비스 API 
 
 ## 👩‍💻 사용 스택 
